@@ -41,14 +41,15 @@ cat_col = ["away_team","boxscore_url","date","game_type","home_team","other_info
 
 # 1.6
 
-#Open the file and erase every "']" and ": "
 datos = datos.replace("']","", regex=True)
 datos = datos.replace(": ","", regex=True)
 datos = datos.replace("Start Time","", regex=True)
 datos = datos.replace("Local","", regex=True)
 
-cat_col = ["away_team","boxscore_url","date","game_type","home_team","other_info_string"]
+cat_col = ["away_team","boxscore_url","date","game_type","home_team","other_info_string","venue"]
+num_col = ["attendance", "away_team_errors", "away_team_hits", "away_team_runs", "home_team_errors", "home_team_hits", "home_team_runs", "game_duration"]
 datos = clean(datos, "dtypes", cat_col, "category")
+datos = clean(datos, "dtypes", num_col, "numeric")
 
 datos = clean(datos, "dropcols", ["other_info_string","boxscore_url",])
 
@@ -57,8 +58,3 @@ datos = clean(datos, "standardize")
 datos = clean(datos, "duplicates")
 
 datos = clean(datos, method = "dropmissing")
-
-d = clean(datos, "replaceval",
-		  columns = ["attendance"],
-		  to_replace = "",
-		  value = np.nan)
